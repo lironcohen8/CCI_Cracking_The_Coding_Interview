@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Stack;
 
 import org.w3c.dom.Node;
 public class LinkedLists {
@@ -154,6 +155,80 @@ public class LinkedLists {
 		
 		//with converting to int
 
+		return null;
+	}
+	public static boolean palindrome(Node head) {
+		// O(n) time, O(n) space
+		/*Stack<Character> s = new Stack<>();
+		Node temp = head;
+		while (head != null) {
+			s.push(head.data);
+			head = head.next;
+		}
+		temp = head;
+		while (temp != null) {
+			if (temp.data != s.peek()) {
+				return false;
+			}
+			else {
+				temp = temp.next;
+				s.pop();
+			}
+		}*/
+		return true;
+	}
+	public static Node intersection(Node head1, Node head2) {
+		//O(m+n) time, O(1) space
+		/*int len1 = 0;
+		int len2 = 0;
+		Node temp1 = head1;
+		while (temp1 != null) {
+			len1++;
+			temp1 = temp1.next;
+		}
+		Node temp2 = head2; 
+		while (temp2 != null) {
+			len2++;
+			temp2 = temp2.next;
+		} 
+		int diff = len1 - len2;
+		temp1 = head1;
+		temp2 = head2;
+		if (diff >= 0) {
+			for (int i =0 ; i < diff; i++) {
+				temp1 = temp1.next;
+			}
+		}
+		else {
+			for (int i =0 ; i < diff; i++) {
+				temp2 = temp2.next;
+			}
+		}
+		while (temp1 != null) {
+			if (temp1 == temp2)
+				return temp1;
+			else {
+				temp1 = temp1.next;
+				temp2 = temp2.next;
+			}
+		}*/
+		return null;
+	}
+	public static Node loopDetection(Node head) {
+		// O(n) time, O(1) space
+		/*Node slow = head;
+		Node fast = head.next;
+		while (fast != slow) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		Node collisionSpot = slow;
+		Node temp = head;
+		while (temp != collisionSpot) {
+			temp = temp.next;
+			collisionSpot = collisionSpot.next;
+		}
+		return temp;*/
 		return null;
 	}
 	public static void main(String[] args) {
