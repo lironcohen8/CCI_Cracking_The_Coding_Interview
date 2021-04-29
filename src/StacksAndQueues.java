@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 public class StacksAndQueues {
@@ -162,6 +163,60 @@ public class StacksAndQueues {
 		
 		public T remove() {
 			return queueOrder.pop();
+		}
+	}
+	public static Stack<Integer> sortStack(Stack<Integer> st) {
+		//O(n^2) time, O(n) space
+		Stack<Integer> ordered = new Stack<>();
+		int curr = 0;
+		ordered.push(st.pop());
+		while (!st.isEmpty()) {
+			curr = st.pop();
+			while (!ordered.isEmpty() && ordered.peek() < curr) {
+				st.push(ordered.pop());
+			}
+			ordered.push(curr);
+		}
+		return ordered;
+	}
+	public class AnimalShelter {
+		private int counter = 1;
+		List<Animal> dogsLst = new LinkedList<>();
+		List<Animal> catsLst = new LinkedList<>();
+		public class Animal {
+			private boolean isDog;
+			private int order;
+			public Animal(String type) {
+				this.isDog = type.equals("dog");
+				this.order = counter;
+				counter++;
+			}
+		}
+		
+		public void enqueue(Animal animal) {
+			if (animal.isDog)
+				dogsLst.add(animal);
+			else
+				catsLst.add(animal);
+		}
+		
+		public Animal dequeueDog() {
+			return dogsLst.remove(0);
+		}
+		
+		public Animal dequeueCat() {
+			return catsLst.remove(0);
+		}
+		
+		public Animal dequeueAny() {
+			if (dogsLst.size() == 0)
+				return catsLst.remove(0);
+			else if (catsLst.size() == 0)
+				return dogsLst.remove(0);
+			else if (catsLst.get(0).order < dogsLst.get(0).order)
+				return catsLst.remove(0);
+			else
+				return dogsLst.remove(0);
 		}
 	}
 	public static void main(String[] args) {
