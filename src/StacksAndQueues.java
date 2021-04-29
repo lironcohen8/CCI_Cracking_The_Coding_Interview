@@ -133,6 +133,37 @@ public class StacksAndQueues {
 			return result;
 		}
 	}
+	public class MyQueue<T> {
+		private Stack<T> queueOrder;
+		private Stack<T> stackOrder;
+		
+		public MyQueue() {
+			  queueOrder = new Stack<>();
+			  stackOrder = new Stack<>();
+		}
+		
+		public boolean isEmpty() {
+			return queueOrder.isEmpty() && stackOrder.isEmpty();
+		}
+		
+		public void add(T element) {
+			while (!queueOrder.isEmpty() ) {
+				stackOrder.push(queueOrder.pop());
+			}
+			stackOrder.add(element);
+			while (!stackOrder.isEmpty() ) {
+				queueOrder.push(stackOrder.pop());
+			}
+		}
+		
+		public T peek() {
+			return queueOrder.peek();
+		}
+		
+		public T remove() {
+			return queueOrder.pop();
+		}
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 	
