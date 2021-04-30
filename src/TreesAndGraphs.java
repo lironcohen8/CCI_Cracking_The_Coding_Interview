@@ -156,4 +156,53 @@ public class TreesAndGraphs {
 			return tmp == null ? null : tmp.parent;
 		}
 	}
+	public ArrayList<Character> buildOrder(char[] projects, char[][] dependencies) {
+		// Algorithm:
+		// 1. Make a directed graph s.t. nodes are projects and edge (u,v) exists iff (u,v) is a dependency
+		// 2. find all the nodes with in degree of zero, if there are none, return error
+		// 3. add these nodes to result
+		// 4. delete these nodes' outgoing edges from the graph
+		// 5. repeat until graph if empty
+		// 6. return result
+		return null;
+	}
+	public boolean covers(Node root, Node n) {
+		// O(n) time
+		if (root == null)
+			return false;
+		if (root == n)
+			return true;
+		return covers(root.left, n) || covers(root.right, n);
+	}
+	public Node getSibling(Node node) {
+		if (node == null || node.parent == null) 
+			return null;
+		return node.parent.right == node ? node.parent.left : node.parent.right; 
+	}
+	public Node firstCommonAncestorWithParents(Node root, Node node1, Node node2) {
+		if (!covers(root, node1) || !covers(root, node2))
+			return null;
+		if (covers(node1, node2))
+			return node1;
+		if (covers(node2, node1))
+			return node2;
+		
+		Node sibling = getSibling(node1);
+		Node parent = node1.parent;
+		while (!covers(sibling, node2)) {
+			sibling = getSibling(parent);
+			parent = parent.parent;
+		}
+		return parent;
+	}
+	public Node firstCommonAncestorWithoutParents(Node root, Node node1, Node node2) {
+		if (root == null || root == node1 || root == node2) 
+			return root;
+		boolean covers1 = covers(root.left, node1); // O(n)
+		boolean covers2 = covers(root.left, node2); // O(n)
+		if (covers1 != covers2) 
+			return root;
+		Node childSide = covers1 ? root.left : root.right;
+		return firstCommonAncestorWithoutParents(childSide, node1, node2); 
+	}
 }
