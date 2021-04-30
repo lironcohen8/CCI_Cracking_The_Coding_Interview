@@ -205,4 +205,54 @@ public class TreesAndGraphs {
 		Node childSide = covers1 ? root.left : root.right;
 		return firstCommonAncestorWithoutParents(childSide, node1, node2); 
 	}
+	public ArrayList<LinkedList<Integer>> BSTSequences(Node root) {
+		if (root == null)
+			return null;
+		ArrayList<LinkedList<Integer>> allSeq = new ArrayList<>();
+		allSeq.add(new LinkedList<>());
+		allSeq.get(0).add(root.val);
+		ArrayList<LinkedList<Integer>> leftSeq = BSTSequences(root.left);
+		ArrayList<LinkedList<Integer>> rightSeq = BSTSequences(root.right);
+		
+		for (LinkedList<Integer> leftLst : leftSeq) {
+			for (LinkedList<Integer> rightLst : rightSeq) {
+				allSeq.addAll(weaveLists(leftLst,rightLst));
+			}
+		}
+		return allSeq;
+	}
+	public void preOrderString(Node root, StringBuilder sb) {
+		if (root == null)
+			sb.append("X"); // as null, for complete tree
+		else {
+			sb.append(root.val + " ");
+			preOrderString(root.left, sb);
+			preOrderString(root.right, sb);
+		}
+	}
+	public boolean subTree1(Node root1, Node root2) {
+		StringBuilder sb1 = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+		preOrderString(root1, sb1);
+		preOrderString(root2, sb2);
+		return (sb1.indexOf(sb2.toString()) != -1);
+	}
+	public boolean matchTree(Node root1, Node root2) {
+		if (root1 == null && root2 == null)
+			return true;
+		else if (root1 == null || root2 == null)
+			return false;
+		else if (root1.val != root2.val) {
+			return false;
+		}
+		else return matchTree(root1.left, root2.left) && matchTree(root1.right, root2.right);
+	}
+	public boolean subTree2(Node root1, Node root2) {
+		if (root1 == null)
+			return false;
+		else if (root1.val == root2.val && matchTree(root1, root2))
+			return true;
+		else 
+			return subTree2(root1.left,root2) || subTree2(root1.right, root2);
+	}
 }
