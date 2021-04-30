@@ -141,6 +141,19 @@ public class TreesAndGraphs {
 		return checkIfSorted(arr);
 	}
 	public Node successor(Node node) {
-		
+		if (node == null)
+			return null;
+		if (node.right != null) {
+			Node tmp = node.right;
+			while (tmp.left != null)
+				tmp = tmp.left;
+			return tmp;
+		}
+		else {
+			Node tmp = node.parent;
+			while (tmp != null && tmp.parent.right == tmp)
+				tmp = tmp.parent;
+			return tmp == null ? null : tmp.parent;
+		}
 	}
 }
