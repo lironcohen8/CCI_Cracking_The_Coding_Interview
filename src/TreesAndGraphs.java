@@ -7,6 +7,7 @@ public class TreesAndGraphs {
 		private String state;
 		private Node left;
 		private Node right;
+		private Node parent;
 		
 		public Node(int val) {
 			this.val = val;
@@ -93,9 +94,53 @@ public class TreesAndGraphs {
 		lists.remove(lists.size() - 1); // last empty list
 		return lists;
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public int height (Node node) {
+		if (node == null)
+			return -1;
+		int leftHeight = height(node.left);
+		int rightHeight = height(node.right);
+		if (leftHeight == Integer.MIN_VALUE || leftHeight == Integer.MIN_VALUE || Math.abs(rightHeight - leftHeight) > 1) // not balanced
+			return Integer.MIN_VALUE;
+		else
+			return Math.max(height(node.right), height(node.left)) + 1;
 	}
-
+	public boolean isBalanced(Node root) {
+		return height(root) != Integer.MIN_VALUE;
+	}
+	public boolean validateBSTHelp(Node root, int min, int max) { 
+		if (root == null)
+			return true;
+		if (root.val > max || root.val < min)
+			return false;
+		else
+			return validateBSTHelp(root.right, root.val, max) && validateBSTHelp(root.left, min, root.val); 
+	}
+	public boolean validateBSTMinMax(Node root) {
+		// O(n) time, O(logn) due to recursion
+		return validateBSTHelp(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	public ArrayList<Integer> treeToArray(Node root, ArrayList<Integer> arrList) {
+		if (root == null)
+			return null;
+		else {
+			treeToArray(root.left, arrList);
+			arrList.add(root.val);
+			treeToArray(root.right, arrList);
+		}
+		return arrList;
+	}
+	public boolean checkIfSorted(ArrayList<Integer> arr) {
+		for (int i = 0; i < arr.size() - 1; i++) {
+			if (arr.get(i) > arr.get(i+1))
+				return false;
+		}
+		return true;
+	}
+	public boolean validateBSTInOrder(Node root) {
+		ArrayList<Integer> arr = treeToArray(root, new ArrayList<Integer>());
+		return checkIfSorted(arr);
+	}
+	public Node successor(Node node) {
+		
+	}
 }
