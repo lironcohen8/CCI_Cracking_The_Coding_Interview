@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 public class RecursionAndDP {
 	public int tripleStep(int n) {
 		//O(2^n) time // O(n) recursion space
@@ -130,4 +131,42 @@ public class RecursionAndDP {
 	public ArrayList<ArrayList<Integer>> powerSet (ArrayList<Integer> set) {
 		return powerSetRec(set);
 	}
+	public int recursiveMultiplyHelp(int a, int b) {
+		// a is bigger so we'll do a + a + a b times
+		// b operations
+		if (b == 0)
+			return 0;
+		if (b == 1)
+			return a;
+		else
+			return a + recursiveMultiplyHelp(a, b - 1);
+	}
+	public int recursiveMultiply(int a, int b) {
+		return recursiveMultiplyBetter(Math.max(a, b), Math.min(a, b));
+	}
+	public int recursiveMultiplyBetter(int bigger, int smaller) {
+		// O(log smaller) operations
+		if (smaller == 0)
+			return 0;
+		if (smaller == 1)
+			return bigger;
+		int semiResult = recursiveMultiplyBetter(bigger, smaller >> 1); // divide by 2
+		if (smaller % 2 == 0)
+			return semiResult + semiResult;
+		else
+			return bigger + semiResult + semiResult;
+	}
+	public void towerOfHanoiHelp(int n, Stack<Integer> start, Stack<Integer> help, Stack<Integer> end) {
+		towerOfHanoiHelp(n-1, start, end, help);
+		System.out.println("moving " + n + "disc from " + start + " to " + end + ".");
+		end.push(start.pop());
+		towerOfHanoiHelp(n-1, help, start, end);
+	}
+	public void towerOfHanoi(int n) {
+		Stack<Integer> a = new Stack<>();
+		Stack<Integer> b = new Stack<>();
+		Stack<Integer> c = new Stack<>();
+		towerOfHanoiHelp(n , a, b, c);
+	}
+	
 }
