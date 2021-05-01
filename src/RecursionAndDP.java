@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.HashMap;
 public class RecursionAndDP {
 	public int tripleStep(int n) {
 		//O(2^n) time // O(n) recursion space
@@ -186,6 +187,32 @@ public class RecursionAndDP {
 				}
 			}
 		}
+		return result;
+	}
+	public void stringPermutationsWithDupsHelp(HashMap<Character, Integer> hm, ArrayList<String> result, String prefix, int remaining) {
+		if (remaining == 0) {
+			result.add(prefix);
+		}
+		else {
+			for (Character c : hm.keySet()) {
+				int count = hm.get(c);
+				if (count > 0) {
+					hm.put(c, count - 1);
+					stringPermutationsWithDupsHelp(hm, result, prefix + c, remaining - 1);
+					hm.put(c, count);
+				}
+			}
+		}
+	}
+	public ArrayList<String> stringPermutationsWithDups(String str) {
+		HashMap<Character,Integer> hm = new HashMap<>();
+		for (int i = 0; i < str.length(); i++) {
+			if (!hm.containsKey(str.charAt(i)))
+				hm.put(str.charAt(i), 0);
+			hm.put(str.charAt(i), hm.get(str.charAt(i)) + 1);
+		}
+		ArrayList<String> result = new ArrayList<>();
+		stringPermutationsWithDupsHelp(hm, result, "", str.length());
 		return result;
 	}
 }
