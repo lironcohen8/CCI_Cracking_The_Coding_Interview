@@ -141,4 +141,8 @@ public class SortAndSearch {
 	public int sparseSearch(String[] arr, String word) {
 		return sparseSearchHelp(arr, word, 0, arr.length-1);
 	}
+	public int sortedMatrixSearch(int[][] matrix, int n) {
+		// by rectangles or by quarters
+		return 0;
+	}
 }
