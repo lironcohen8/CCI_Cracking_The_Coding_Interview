@@ -1,9 +1,11 @@
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.ArrayList;
 
 public class TreesAndGraphs {
 	public class Node {
 		private int val;
+		private int size;
 		private String state;
 		private Node left;
 		private Node right;
@@ -254,5 +256,15 @@ public class TreesAndGraphs {
 			return true;
 		else 
 			return subTree2(root1.left,root2) || subTree2(root1.right, root2);
+	}
+	public Node getRandomNode(Node root) {
+		Random rand = new Random();
+		int result = rand.nextInt(root.size);
+		if (result == 0)
+			return root;
+		else if (result < root.left.size)
+			return getRandomNode(root.left);
+		else 
+			return getRandomNode(root.right);
 	}
 }
