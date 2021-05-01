@@ -168,5 +168,24 @@ public class RecursionAndDP {
 		Stack<Integer> c = new Stack<>();
 		towerOfHanoiHelp(n , a, b, c);
 	}
-	
+	public String insertCharAt(String str, Character ch, int index) {
+		String result = "";
+		return str.substring(0, index) + ch + str.substring(index);
+	}
+	public ArrayList<String> stringPermutations(String str) {
+		ArrayList<String> result = new ArrayList<String>();
+		if (str.length() == 0) {
+			result.add("");
+		}
+		else {
+			Character ch = str.charAt(0);
+			ArrayList<String> resultSoFar = stringPermutations(str.substring(1));
+			for (String st : resultSoFar) {
+				for (int i = 0; i <= st.length(); i++) {
+					result.add(insertCharAt(st, ch, i));
+				}
+			}
+		}
+		return result;
+	}
 }
