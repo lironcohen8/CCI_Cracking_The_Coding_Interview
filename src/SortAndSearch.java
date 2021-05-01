@@ -86,4 +86,59 @@ public class SortAndSearch {
 	public int searchInRotatedArr(int[] arr, int n) {
 		return searchInRotatedArrHelp(arr, n, 0, arr.length-1);
 	}
+	public int sortedSerchNosize(int[] arr, int num) {
+		// arr is actually a listy
+		int i = 0;
+		while (arr[i] != -1) {
+			// as elementAt(i)
+			i *= 2;
+		}
+		int j = i/2;
+		for (j = i/2; j < i; j++) {
+			if (arr[j] == -1)
+				break;
+		}
+		int length = j-1;
+		//binary search regular
+		//can do it in the way while (arr[i] != -1) && arr[i] < n)
+		return 0;
+	}
+	public int sparseSearchHelp(String[] arr, String word, int start, int end) {
+		if (end < start)
+			return -1;
+		while (start >= end) {
+			int mid = (start + end) / 2;
+			if (arr[mid].isEmpty()) { // mid is empty
+				int right = mid + 1;
+				int left = mid - 1;
+				while (true) {
+					if (left < start && right > end)
+						return -1;
+					else if (left >= start && !arr[left].isEmpty()) {
+						mid = left;
+						break;
+					}
+					else if (right <= end && !arr[right].isEmpty()) {
+						mid = right;
+						break;
+					}
+					left--;
+					right++;
+				}
+			}
+			
+			if (arr[mid].equals(word))
+				return mid;
+			if (!arr[mid].isEmpty()) {
+				if (arr[mid].compareTo(word) < 0)
+					start = mid + 1;
+				else
+					end = mid - 1;
+			}
+		}
+		return -1;
+	}
+	public int sparseSearch(String[] arr, String word) {
+		return sparseSearchHelp(arr, word, 0, arr.length-1);
+	}
 }
