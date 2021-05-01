@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 public class RecursionAndDP {
 	public int tripleStep(int n) {
 		//O(2^n) time // O(n) recursion space
@@ -76,9 +76,58 @@ public class RecursionAndDP {
 		int[][] memo = new int [limits.length][limits[0].length];
 		return robotInAGridMemoHelp(0, 0, limits, memo) == 1;
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public int magicIndexHelp(int[] arr, int start, int end) {
+		if (end < start)
+			return -1;
+		int mid = (start + end) / 2;
+		if (arr[mid] == mid)
+			return mid;
+		if (arr[mid] > mid)
+			return magicIndexHelp(arr, start, mid - 1);
+		else
+			return magicIndexHelp(arr, mid + 1, end);
 	}
-
+	public int magicIndex(int[] arr) {
+		// O(log n) time
+		return magicIndexHelp(arr, 0, arr.length-1);
+	}
+	public int magicIndexDupHelp(int[] arr, int start, int end) {
+		if (end < start)
+			return -1;
+		int mid = (start + end) / 2;
+		if (arr[mid] == mid)
+			return mid;
+		if (arr[mid] > mid) {
+			int firstTry = magicIndexDupHelp(arr, start, mid - 1); 
+			return firstTry != -1 ? firstTry : magicIndexDupHelp(arr, arr[mid], end);
+		}
+		else {
+			int firstTry = magicIndexDupHelp(arr, mid + 1, end); 
+			return firstTry != -1 ? firstTry : magicIndexDupHelp(arr, start, arr[mid]);
+		}
+	}
+	public int magicIndexDup(int[] arr) {
+		// O(log n) time
+		return magicIndexDupHelp(arr, 0, arr.length-1);
+	}
+	public ArrayList<ArrayList<Integer>> powerSetRec (ArrayList<Integer> set) {
+		ArrayList<ArrayList<Integer>> toAdd = new ArrayList<>();
+		if (set.size() == 0) {
+			return toAdd;
+		}
+		else {
+			int num = set.get(set.size() - 1);
+			set.remove(set.size()-1);
+			ArrayList<ArrayList<Integer>> soFar = powerSetRec(set);
+			toAdd.addAll(soFar);
+			for (ArrayList<Integer> lst : toAdd) {
+				lst.add(num);
+			}
+			toAdd.addAll(soFar);
+		}
+		return toAdd;
+	}
+	public ArrayList<ArrayList<Integer>> powerSet (ArrayList<Integer> set) {
+		return powerSetRec(set);
+	}
 }
